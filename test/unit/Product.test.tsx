@@ -1,18 +1,14 @@
 import '@testing-library/jest-dom';
 import React from 'react';
-import {render, screen, waitFor} from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import {MemoryRouter, Route, Routes} from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Product } from '../../src/client/pages/Product';
-import {ApplicationState, initStore} from '../../src/client/store';
-import {
-    Product as ProductDetailsType,
-} from '../../src/common/types';
+import { ApplicationState, initStore } from '../../src/client/store';
+import { Product as ProductDetailsType } from '../../src/common/types';
 import { productDetailsLoad } from '../../src/client/store';
-import {CartApi, ExampleApi} from "../../src/client/api";
-import {
-    AxiosResponse,
-} from "axios";
+import { CartApi, ExampleApi } from "../../src/client/api";
+import { AxiosResponse } from "axios";
 
 describe('Product Component', () => {
     // let store: MockStoreEnhanced<Partial<ApplicationState>>;

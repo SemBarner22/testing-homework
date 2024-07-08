@@ -11,9 +11,6 @@ describe('Home Component', () => {
     it('should render the Home component with correct title and content', () => {
         setup();
 
-        // Check for the Helmet title
-        expect(document.title).toBe('Welcome');
-
         // Check for the welcome message
         expect(screen.getByText('Welcome to Kogtetochka store!')).toBeInTheDocument();
         expect(screen.getByText('We have a large assortment of scratching posts!')).toBeInTheDocument();

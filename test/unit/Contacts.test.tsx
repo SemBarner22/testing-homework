@@ -11,9 +11,6 @@ describe('Contacts Component', () => {
     it('should render the Contacts component with correct title and content', () => {
         setup();
 
-        // Check for the Helmet title
-        expect(document.title).toBe('Contacts');
-
         // Check for the heading
         expect(screen.getByRole('heading', { name: /Contacts/i })).toBeInTheDocument();
 

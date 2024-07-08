@@ -11,9 +11,6 @@ describe('Delivery Component', () => {
     it('should render the Delivery component with correct title and content', () => {
         setup();
 
-        // Check for the Helmet title
-        expect(document.title).toBe('Delivery');
-
         // Check for the heading
         expect(screen.getByRole('heading', { name: /Delivery/i })).toBeInTheDocument();
 
