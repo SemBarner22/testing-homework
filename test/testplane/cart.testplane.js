@@ -65,4 +65,20 @@ describe('Cart Page', function() {
         //    cart: await this.browser.execute(() => window.store.getState().cart)
         // });
     });
+
+    it('should show in checkout when item is added', async ({browser}) => {
+        let bugId = process.env.BUG_ID
+        await browser.runStep('add one item to cart', async() => {
+            await browser.url('http://localhost:3000/hw/store/catalog/0?${bugId}');
+            await browser.$('.ProductDetails-AddToCart.btn.btn-primary.btn-lg').click();
+        });
+        await browser.url('http://localhost:3000/hw/store/cart');
+        const checkoutForm = await browser.$('h2=Сheckout');
+        expect(await checkoutForm.isDisplayed()).toBe(true);
+        // expect(actions).to.include({
+        //    type: 'CHECKOUT',
+        //    form: { name: 'John Doe', phone: '123-456-7890', address: '123 Main St' },
+        //    cart: await this.browser.execute(() => window.store.getState().cart)
+        // });
+    });
 });
