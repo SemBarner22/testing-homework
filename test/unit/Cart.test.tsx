@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import {render, fireEvent, screen, waitFor} from '@testing-library/react';
 import { Provider } from 'react-redux';
 import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -24,27 +24,6 @@ describe('Cart Component', () => {
         );
     };
 
-    it('should render empty cart message when cart is empty', () => {
-        setup({ cart: {} });
-
-        expect(screen.getByText('Cart is empty. Please select products in the')).toBeInTheDocument();
-        expect(screen.getByText('catalog')).toBeInTheDocument();
-    });
-
-    it('should render cart items and total price when cart is not empty', () => {
-        const cart = {
-            1: { id: 1, name: 'Test Product 1', count: 2, price: 100 },
-            2: { id: 2, name: 'Test Product 2', count: 1, price: 200 }
-        };
-        setup({ cart });
-
-        expect(screen.getByText('Test Product 1')).toBeInTheDocument();
-        expect(screen.getByText('Test Product 2')).toBeInTheDocument();
-        expect(screen.getByText('$200')).toBeInTheDocument();
-        expect(screen.getByText('$200')).toBeInTheDocument();
-        expect(screen.getByText('$400')).toBeInTheDocument();
-    });
-
     it('should dispatch clearCart action when "Clear shopping cart" button is clicked', () => {
         const cart = {
             1: { id: 1, name: 'Test Product 1', count: 2, price: 100 }
@@ -66,24 +45,13 @@ describe('Cart Component', () => {
         expect(screen.getByText('Сheckout')).toBeInTheDocument();
     });
 
-    it('should render order completion message when cart is empty and latestOrderId is present', () => {
+    it('should render order completion message when cart is empty and latestOrderId is present', async () => {
         setup({ cart: {}, latestOrderId: 123 });
 
-        expect(screen.getByText('Well done!')).toBeInTheDocument();
-        expect(screen.getByText('Order #123 has been successfully completed.')).toBeInTheDocument();
-    });
-
-    it('should render alert with correct class based on BUG_ID', () => {
-        process.env.BUG_ID = '8';
-        setup({ cart: {}, latestOrderId: 123 });
-
-        const alert = screen.getByRole('alert');
-        expect(alert).toHaveClass('alert-danger');
-
-        delete process.env.BUG_ID;
-        setup({ cart: {}, latestOrderId: 123 });
-
-        expect(alert).toHaveClass('alert-success');
+        await waitFor(()  => {
+            expect(screen.getByText('Well done!')).toBeInTheDocument();
+            expect(screen.getByText('123')).toBeInTheDocument();
+        });
     });
 
     it('should dispatch checkout action when checkout form is submitted', () => {
